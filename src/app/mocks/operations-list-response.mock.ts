@@ -1,4 +1,6 @@
-export const OPERATIONS_LIST_BD = [
+import { OperationsListResponse } from "../types/operations-list-response.type";
+
+export const OPERATIONS_LIST_BD: OperationsListResponse = [
   {
     customerName: 'João',
     customerStatus: 1,
