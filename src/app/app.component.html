@@ -1,0 +1,34 @@
+<div class="operations">
+  <div class="operations__filter">
+    <input class="operations__filter-input" type="text" id="search" placeholder="Filtrar por nome">
+  </div>
+  <div class="operations__table">
+    <table>
+      <thead>
+        <tr>
+          <th class="operations__table-cell operations__table-cell--white">Nome</th>
+          <th class="operations__table-cell operations__table-cell--white">Status cliente</th>
+          <th class="operations__table-cell operations__table-cell--white">Data operação</th>
+          <th class="operations__table-cell operations__table-cell--white">Hora operação</th>
+          <th class="operations__table-cell operations__table-cell--white"> Valor operação</th>
+          <th class="operations__table-cell operations__table-cell--white">Risco operação</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let operation of operations">
+        <td class="operations__table-cell">{{ operation.customerName }}</td>
+        <td class="operations__table-cell">
+          <p class="operations__status">
+            {{ operation.customerStatus | status }}
+            <img [src]="operation.customerStatus | operationStatus" class="operations__icon" width="20" height="20">
+          </p>
+        </td>
+        <td class="operations__table-cell">{{ operation.operationDate | date : "shortDFate" }}</td>
+        <td class="operations__table-cell">{{ operation.operationDate | date : "HH:mm a" }}</td>
+        <td class="operations__table-cell">{{ operation.operationValue | currency }}</td>
+        <td class="operations__table-cell">{{ operation.operationRisk | percent : '1.0-2' }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
