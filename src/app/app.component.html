@@ -1,6 +1,6 @@
 <div class="operations">
   <div class="operations__filter">
-    <input class="operations__filter-input" type="text" id="search" placeholder="Filtrar por nome">
+    <input class="operations__filter-input" type="text" id="search" placeholder="Filtrar por nome" [(ngModel)]="searchTerm">
   </div>
   <div class="operations__table">
     <table>
@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let operation of operations">
+      <tr *ngFor="let operation of operations | filter : 'customerName' : searchTerm ">
         <td class="operations__table-cell">{{ operation.customerName }}</td>
         <td class="operations__table-cell">
           <p class="operations__status">
@@ -23,7 +23,7 @@
             <img [src]="operation.customerStatus | operationStatus" class="operations__icon" width="20" height="20">
           </p>
         </td>
-        <td class="operations__table-cell">{{ operation.operationDate | date : "shortDFate" }}</td>
+        <td class="operations__table-cell">{{ operation.operationDate | date : "shortDate" }}</td>
         <td class="operations__table-cell">{{ operation.operationDate | date : "HH:mm a" }}</td>
         <td class="operations__table-cell">{{ operation.operationValue | currency }}</td>
         <td class="operations__table-cell">{{ operation.operationRisk | percent : '1.0-2' }}</td>
