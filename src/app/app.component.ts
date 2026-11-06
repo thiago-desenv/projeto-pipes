@@ -1,10 +1,10 @@
 import { OperationsListResponse } from './types/operations-list-response.type';
 import { Component, inject, OnInit } from '@angular/core';
 import { OperationsService } from './services/operations.service';
-import { take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { StatusPipe } from './pipes/status.pipe';
 import { OperationStatusPipe } from './pipes/operation-status.pipe';
-import { CurrencyPipe, DatePipe, PercentPipe, NgForOf, CommonModule } from '@angular/common';
+import { CurrencyPipe, DatePipe, PercentPipe, NgForOf, CommonModule, AsyncPipe } from '@angular/common';
 import { FilterPipe } from './pipes/filter.pipe';
 import { FormsModule } from '@angular/forms';
 
@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
     PercentPipe,
     NgForOf,
     FilterPipe,
+    AsyncPipe,
     FormsModule
 ],
   templateUrl: './app.component.html',
@@ -29,21 +30,13 @@ export class AppComponent implements OnInit {
 
   searchTerm: string = '';
 
-  operations: OperationsListResponse = [];
+  operations$: Observable<OperationsListResponse> | undefined;
 
   ngOnInit(): void {
-    this.getOperations();
+    this.operations$ = this.getOperations();
   }
 
-  getOperations() {
-    this._operationService.getOperations()
-    .pipe(take(1))
-    .subscribe((operationsListResponse) => {
-        this.operations  = operationsListResponse;
-    });
-
-    setTimeout(() => {
-      console.log(this.operations);
-    }, 3000);
+  getOperations(): Observable<OperationsListResponse> {
+    return this._operationService.getOperations();
   }
 }
